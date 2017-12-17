@@ -92,17 +92,18 @@ class Claim extends CI_Controller
                 "metadata": { 
                     "method": "new_claim" 
                 }, "data": { 
-                    "nomor_kartu": "0000668870002",
-                    "nomor_sep": "1710R01011160000250",
-                    "nomor_rm": "214-45-78",
-                    "nama_pasien": "NIKMAH",
-                    "tgl_lahir": "1940-01-01 02:00:00",
-                    "gender": "2"
+                    "nomor_kartu": "{$this->input->post('nomor_peserta')}",
+                    "nomor_sep": "{$this->input->post('nomor_sep')}",
+                    "nomor_rm": "{$this->input->post('nomor_rm')}",
+                    "nama_pasien": "{$this->input->post('nama_pasien')}",
+                    "tgl_lahir": "{$this->input->post('tgl_lahir')}",
+                    "gender": "{$this->input->post('gender')}"
                 }
             }
 EOT;
+// var_dump($request);exit;
             // data yang akan dikirimkan dengan method POST adalah encrypted
-            $payload = $this->mc_encrypt(null, $this->key);
+            $payload = $this->mc_encrypt($request, $this->key);
 
             // tentukan Content-Type pada http header
             $header = array("Content-Type: application/x-www-form-urlencoded");
@@ -127,10 +128,10 @@ EOT;
 
             if($msg['metadata']['code'] === 200)
             {
-                $this->session->set_flashdata('hasil','Insert Data Berhasil');
+                $this->session->set_flashdata('hasil_sukses','Insert Data Berhasil');
             }else
             {
-               $this->session->set_flashdata('hasil','Insert Data Gagal');
+               $this->session->set_flashdata('hasil_error','Insert Data Gagal');
             }
             redirect('/');
         }else{

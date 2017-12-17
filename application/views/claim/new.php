@@ -10,12 +10,26 @@
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/bootstrap-datetimepicker.min.css">
+	<!-- fontsawesome -->
+	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="container-fluid">
 		<div class="container">
+		<?php if($this->session->flashdata('hasil_sukses')) { ?>
+			<div class="alert alert-success alert-dismissable fade in">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Sukses!</strong> Data berhasil dimasukkan ke aplikasi E-Klaim.
+			</div>
+		<?php } ?>
+		<?php if($this->session->flashdata('hasil_error')) { ?>
+			<div class="alert alert-danger alert-dismissable fade in">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Error!</strong> Data tidak berhasil dimasukkan ke aplikasi E-Klaim.
+			</div>
+		<?php } ?>
             <div class="row">
                 <div class="col-sm-12">
                     <h1>Integrasi dengan Aplikasi E-Klaim (for test only)</h1>
@@ -23,7 +37,7 @@
                 </div>
             </div>
 			<div class="formBox">
-				<form>
+				<form method="post" action="<?php echo base_url('claim/create'); ?>">
 						<div class="row">
 							<div class="col-sm-12">
 								<h1>Tambah Pasien Beserta Klaim Baru</h1>
@@ -34,14 +48,14 @@
 							<div class="col-sm-6">
 								<div class="inputBox ">
 									<div class="inputText">Nomor Peserta</div>
-									<input type="text" name="" class="input">
+									<input type="text" name="nomor_peserta" class="input">
 								</div>
 							</div>
 
 							<div class="col-sm-6">
 								<div class="inputBox">
 									<div class="inputText">Nomor SEP</div>
-									<input type="text" name="" class="input">
+									<input type="text" name="nomor_sep" class="input">
 								</div>
 							</div>
 						</div>
@@ -50,29 +64,45 @@
 							<div class="col-sm-6">
 								<div class="inputBox">
 									<div class="inputText">Nomor Rekam Medis</div>
-									<input type="text" name="" class="input">
+									<input type="text" name="nomor_rm" class="input">
 								</div>
 							</div>
 
 							<div class="col-sm-6">
 								<div class="inputBox">
 									<div class="inputText">Nama Pasien</div>
-									<input type="text" name="" class="input">
+									<input type="text" name="nama_pasien" class="input">
 								</div>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-sm-12">
-								<div class="inputBox">
+								<div class="inputBox focus">
 									<div class="inputText">Tanggal Lahir</div>
                                     <div id="datetimepicker" class="input-append date">
-                                        <input name="" data-format="yyyy-mm-dd hh:mm:ss" type="text"></input>
+                                        <input name="tgl_lahir" class="input" data-format="yyyy-MM-dd hh:mm:ss" type="text"></input>
                                         <span class="add-on">
-                                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                                            </i>
+											<i class="fa fa-calendar-plus-o" aria-hidden="true"></i>										
                                         </span>
                                     </div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<h3>Jenis Kelamin</h3>
+								<div class="reg">
+									<bdo>
+										<input type="radio" value="1" name="gender">
+										<span></span>
+										<abbr> Laki-laki </abbr>
+									</bdo>
+								</div>
+								<div class="reg">
+									<bdo>
+										<input type="radio" value="2" name="gender">
+										<span></span>
+										<abbr> Perempuan </abbr>
+									</bdo>
 								</div>
 							</div>
 						</div>
@@ -99,7 +129,7 @@
         });
 
         $('#datetimepicker').datetimepicker({
-            format: 'yyyy-mm-dd hh:mm:ss',
+            format: 'yyyy-MM-dd hh:mm:ss',
             language: 'id'
         });
     </script>
